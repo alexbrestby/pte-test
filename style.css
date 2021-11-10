@@ -28,5 +28,9 @@ hr {
 }
 
 .text-center {
-    margin: 0 auto;
+    width: 100%;
+}
+
+mark {
+    display: inline;
 }

@@ -15,11 +15,13 @@
 </head>
 
 <body>
-
-  <div class="jumbotron text-center">
-    <h1>Помощник настоящего железнодорожника</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="jumbotron text-center">
+        <h1>Помощник настоящего железнодорожника</h1>
+      </div>
+    </div>
   </div>
-
   <div class="container">
     <div class="row">
       <div class="col-sm-3">
@@ -32,6 +34,7 @@
       </div>
     </div>
   </div>
+
   <script type="text/javascript">
     // $(document).ready(function(){
     //   $("#search").keypress(function(){
