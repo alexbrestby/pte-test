@@ -1,0 +1,32 @@
+.answer>img {
+    margin: 0 auto;
+    padding: 2em 0 3em 0;
+}
+
+hr {
+    width: 98%;
+}
+
+.under-construction {
+    min-height: 95vh;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1em 0 1em 0;
+}
+
+.under-construction>img {
+    width: 100%;
+    height: auto;
+}
+
+.contact {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.text-center {
+    margin: 0 auto;
+}
