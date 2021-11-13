@@ -1,6 +1,7 @@
-.answer>img {
+img {
     margin: 0 auto;
     padding: 2em 0 3em 0;
+    max-width: 80%;
 }
 
 hr {

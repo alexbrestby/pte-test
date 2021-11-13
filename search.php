@@ -15,7 +15,7 @@ $result = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($result)>0){
 	while ($row=mysqli_fetch_assoc($result)) {
-		echo '<u><em><b>Вопрос</b></em><br></u>';
+		echo '<u><em><b>Вопрос</b></em></u>';
 		$quest = preg_replace('/^ +| +$|( ) +/m', '$1', $row["q_text"]);
 
 		// echo '<em><b>' . $quest . '</b></em><br><br>';
@@ -23,10 +23,10 @@ if(mysqli_num_rows($result)>0){
 		if ($row["q_img"]) echo '<img src=img/' . $row["q_img"] . ' alt="фото из вопроса">';
 		echo '<br>';
 
-		echo ($row["ans_2_text"] || $row["ans_2_img"]) ? '<b><em><u style="background-color: lightgreen;">Несколько ответов:</u></em></b>' . '<br>' : '<b><em><u style="background-color: skyblue;">Один ответ:</u></em></b>' . '<br>';
+		echo ($row["ans_2_text"] || $row["ans_2_img"]) ? '<b><em><u style="background-color: lightgreen;">Несколько ответов:</u></em></b>' . '<br>' : '<b><em><u style="background-color: skyblue;">Один ответ:</u></em></b>';
 
-		if ($row["ans_1_text"] != null) echo '<hr>- ' . $row["ans_1_text"];
-		if ($row["ans_1_img"] != null) echo '<hr><img src=img/' . $row["ans_1_img"] . ' alt="фото из ответа">';
+		if ($row["ans_1_text"] != null) echo'- ' . $row["ans_1_text"];
+		if ($row["ans_1_img"] != null) echo '<img src=img/' . $row["ans_1_img"] . ' alt="фото из ответа">';
 
 
 		if ($row["ans_2_text"] != null) echo '<hr>- ' . $row["ans_2_text"];
