@@ -11,10 +11,23 @@ $conn = mysqli_connect("localhost", "root", "453644", "pte_test");
 mysqli_set_charset($conn, "utf8");
 
 $sql = "SELECT * FROM quest WHERE q_text LIKE '%". $_POST['name']. "%'";
+$sql_lenght =  "SELECT COUNT(*) FROM quest";
+
+
+$result_length = mysqli_query($conn, $sql_lenght);
+$row_lenght = mysqli_fetch_array($result_length);
+
+// echo $row_lenth[0] . "<br>";
+// var_dump($row_lenth);
+
 $result = mysqli_query($conn, $sql);
 
-if(mysqli_num_rows($result)>0){
-	while ($row=mysqli_fetch_assoc($result)) {
+if (mysqli_num_rows($result)>0 && (mysqli_num_rows($result) != $row_lenght[0])) {
+
+	echo(mysqli_num_rows($result)) . "<br>";
+	echo $row_lenght[0] . "<br>";
+
+	while ($row = mysqli_fetch_assoc($result)) {
 		echo '<u><em><b>Вопрос</b></em></u>';
 		$quest = preg_replace('/^ +| +$|( ) +/m', '$1', $row["q_text"]);
 
@@ -48,8 +61,8 @@ if(mysqli_num_rows($result)>0){
 		echo '<hr style="border: 1px solid palevioletred;">';
 	}
 }
-else{
-	echo "<tr><td>0 result's found</td></tr>";
+else {
+	echo "<tr><td>Поиск не дал результатов</td></tr>";
 }
 
 ?>
