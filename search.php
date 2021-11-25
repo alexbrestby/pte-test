@@ -24,19 +24,19 @@ $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result)>0 && (mysqli_num_rows($result) != $row_lenght[0])) {
 
-	echo(mysqli_num_rows($result)) . "<br>";
-	echo $row_lenght[0] . "<br>";
+	// echo(mysqli_num_rows($result)) . "<br>";
+	// echo $row_lenght[0] . "<br>";
 
 	while ($row = mysqli_fetch_assoc($result)) {
 		echo '<u><em><b>Вопрос</b></em></u>';
 		$quest = preg_replace('/^ +| +$|( ) +/m', '$1', $row["q_text"]);
 
 		// echo '<em><b>' . $quest . '</b></em><br><br>';
-		echo $quest . '<br>';
+		echo "<span style='text-align: justify;'>" . $quest . "</span><br>";
 		if ($row["q_img"]) echo '<img src=img/' . $row["q_img"] . ' alt="фото из вопроса">';
 		echo '<br>';
 
-		echo ($row["ans_2_text"] || $row["ans_2_img"]) ? '<b><em><u style="background-color: lightgreen;">Несколько ответов:</u></em></b>' . '<br>' : '<b><em><u style="background-color: skyblue;">Один ответ:</u></em></b>';
+		echo ($row["ans_2_text"] || $row["ans_2_img"]) ? '<b><em><u style="background-color: lightgreen; padding: 0 5px 0 5px;">Несколько ответов:</u></em></b>' . '<br>' : '<b><em><u style="background-color: skyblue; padding: 0 5px 0 5px;">Один ответ:</u></em></b>';
 
 		if ($row["ans_1_text"] != null) echo'- ' . $row["ans_1_text"];
 		if ($row["ans_1_img"] != null) echo '<img src=img/' . $row["ans_1_img"] . ' alt="фото из ответа">';
