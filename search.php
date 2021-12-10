@@ -1,38 +1,28 @@
 <?php
+require_once('db.php');
 header('Content-type: text/plain; charset=utf-8');
 ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
 
 // Create connection
-
-$conn = mysqli_connect("localhost", "root", "453644", "pte_test");
-
 mysqli_set_charset($conn, "utf8");
 
-$sql = "SELECT * FROM quest WHERE q_text LIKE '%". $_POST['name']. "%'";
+$sql = "SELECT * FROM quest WHERE q_text LIKE '%". $_POST['question']. "%'";
 $sql_lenght =  "SELECT COUNT(*) FROM quest";
-
 
 $result_length = mysqli_query($conn, $sql_lenght);
 $row_lenght = mysqli_fetch_array($result_length);
-
-// echo $row_lenth[0] . "<br>";
-// var_dump($row_lenth);
 
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result)>0 && (mysqli_num_rows($result) != $row_lenght[0])) {
 
-	// echo(mysqli_num_rows($result)) . "<br>";
-	// echo $row_lenght[0] . "<br>";
-
 	while ($row = mysqli_fetch_assoc($result)) {
 		echo '<u><em><b>Вопрос</b></em></u>';
 		$quest = preg_replace('/^ +| +$|( ) +/m', '$1', $row["q_text"]);
 
-		// echo '<em><b>' . $quest . '</b></em><br><br>';
-		echo "<span style='text-align: justify;'>" . $quest . "</span><br>";
+		echo "<span>" . $quest . "</span><br>";
 		if ($row["q_img"]) echo '<img src=img/' . $row["q_img"] . ' alt="фото из вопроса">';
 		echo '<br>';
 
@@ -56,7 +46,6 @@ if (mysqli_num_rows($result)>0 && (mysqli_num_rows($result) != $row_lenght[0])) 
 
 		if ($row["ans_5_text"] != null) echo '<hr>- ' . $row["ans_5_text"] . '<br>';
 		if ($row["ans_5_img"] != null) echo '<hr><img src=img/' . $row["ans_5_img"] . ' alt="фото из ответа">';
-
 
 		echo '<hr style="border: 1px solid palevioletred;">';
 	}

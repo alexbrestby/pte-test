@@ -1,11 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+:root {
+    --clr: #222327;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    margin: 2em auto;
+    width: 800px;
+    /* height: 60vh; */
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: var(--clr);
+    color: #fff;
+}
+
+.nav_bar {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 4em;
+}
+
+.nav_bar>ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    width: 100%;
+}
+
+.nav_bar ul li {
+    margin: 0 7em;
+}
+
+@media (max-width: 600px) {
+    .nav_bar ul li {
+        margin: 0 auto;
+    }
+}
+
+.nav_bar ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 500;
+    z-index: 1000;
+}
+
+.nav_bar ul li a .icon {
+    display: block;
+    font-size: 1.5em;
+    text-align: center;
+    line-height: 3em;
+    color: #fff;
+    opacity: 1;
+}
+
+.nav_bar ul li:hover a .icon {
+    opacity: 0;
+}
+
+.nav_bar ul li a .text {
+    position: absolute;
+    letter-spacing: 0.05em;
+    color: #fff;
+    opacity: 0;
+    width: max-content;
+}
+
+.nav_bar ul li:hover a .text {
+    opacity: 1;
+    transition: 1s;
+}
+
+.login_form, .register_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40vw;
+    margin: 2em auto;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: space-between;  
+}
+
+.submit-button button {
+    width: 10vw;
+}
+
+.btn-outline-dark a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* .footer {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    height: 5vh;
+} */
+
 img {
     margin: 0 auto;
     padding: 2em 0 3em 0;
     max-width: 80%;
-}
-
-hr {
-    width: 98%;
 }
 
 .under-construction {
