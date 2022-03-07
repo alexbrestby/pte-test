@@ -43,14 +43,6 @@
                                 <span class="text">Задать вопрос</span>
                             </a>
                         </li>
-                        <li class="list">
-                            <a href="login.php">
-                                <span class="icon">
-                                    <ion-icon name="person-outline"></ion-icon>
-                                </span>
-                                <span class="text">Войти</span>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
