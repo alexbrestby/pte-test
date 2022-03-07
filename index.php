@@ -1,6 +1,6 @@
 <?php
   require_once('log.php');
-  include('header.php');
+  include('layout/header.php');
 ?>
 
 <div class="container">
@@ -10,7 +10,7 @@
       <div class="mt-3 answer d-flex flex-column justify-content-center" id="output"></div>
     </div>
   </div>
-  <?php include('footer.php');?>
+  <?php include('layout/footer.php');?>
 </div>
 
 
