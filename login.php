@@ -64,7 +64,7 @@ if(isset($_POST['submit']))
         </div>
         <div class="submit-button">
             <button type="submit" name="submit" class="btn btn-primary">Войти</button>
-            <button class="btn btn-outline-dark"><a href="register.php">Зарегистрироваться</a></button>
+            <button class="btn btn-outline-dark" style="white-space: normal;><a href="register.php">Регистрация</a></button>
         </div>
     </form>
     <?php include('footer.php');?>

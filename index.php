@@ -1,4 +1,7 @@
-<?php include('header.php');?>
+<?php
+  require_once('log.php');
+  include('header.php');
+?>
 
 <div class="container">
   <div class="row">
