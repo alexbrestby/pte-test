@@ -8,7 +8,7 @@
     <meta name="keywords"
         content="Экзамен, тест, ПТЭ, правила технической эксплуатации, Белорусская железная дорога, вагонник, путеец, локомотив">
     <meta name="description" content="Ваш помощник в изучении ПТЭ ЖД БЧ">
-    <link rel="shortcut icon" href="img/favicon/train.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/favicon/train.ico" type="image/x-icon">
     <link rel="stylesheet" href="assets/styles/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
