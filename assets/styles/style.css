@@ -124,6 +124,10 @@ img {
   max-width: 80%;
 }
 
+.swal2-image {
+  padding: 0;
+}
+
 .under-construction {
   min-height: 95vh;
   width: 50%;
