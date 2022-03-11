@@ -6,6 +6,8 @@ require_once 'config/db.php';
 
 $name = "Alex";
 
+debug($_POST["email"]);
+
 if (session_status() === PHP_SESSION_NONE) {
     $lifetime = 60 * 60 * 24 * 30;
     // setcookie(session_name(), session_id(), time() + $lifetime);

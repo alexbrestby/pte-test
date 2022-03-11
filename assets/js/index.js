@@ -6,12 +6,8 @@ cookies.forEach((elem) => {
   }
 });
 
-if (
-  localStorage.getItem("id") === null ||
-  localStorage.getItem("id") !== userId
-) {
-  localStorage.setItem("id", userId);
-  Swal.fire({
+const swalert = async () => {
+  await Swal.fire({
     imageUrl: "assets/img/images/pte_image.jpg",
     imageHeight: 500,
     input: "email",
@@ -23,7 +19,30 @@ if (
     },
     footer:
       '<a href="http://xpress.by/2016/06/15/pte-po-novomu-umnoe-reshenie-dlya-smartfonov/" target="_blank">Учить ПТЭ</a>',
+  }).then((result) => {
+    if (result.value) {
+      let form = document.createElement("form");
+      form.style.cssText = "display: none";
+      form.action = "./index.php";
+      form.method = "POST";
+
+      let input = document.createElement("input");
+      input.name = "email";
+      input.value = result.value;
+      form.append(input);
+
+      document.body.append(form);
+      form.submit();
+    }
   });
+};
+
+if (
+  localStorage.getItem("id") === null ||
+  localStorage.getItem("id") !== userId
+) {
+  localStorage.setItem("id", userId);
+  swalert();
 }
 
 $(document).on("input", function (ev) {
