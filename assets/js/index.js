@@ -1,4 +1,5 @@
 const cookies = document.cookie.split(";");
+console.log(cookies);
 let userId = "";
 cookies.forEach((elem) => {
   if (elem.trim().split("=")[0] === "id") {
@@ -21,7 +22,7 @@ const swalert = async () => {
       '<a href="http://xpress.by/2016/06/15/pte-po-novomu-umnoe-reshenie-dlya-smartfonov/" target="_blank">Учить ПТЭ</a>',
   }).then((result) => {
     if (result.value) {
-      let form = document.createElement("form");
+      var form = document.createElement("form");
       form.style.cssText = "display: none";
       form.action = "./index.php";
       form.method = "POST";
@@ -30,8 +31,9 @@ const swalert = async () => {
       input.name = "email";
       input.value = result.value;
       form.append(input);
-
       document.body.append(form);
+    }
+    if (result.isConfirmed) {
       form.submit();
     }
   });

@@ -88,27 +88,28 @@
   transition: 1s;
 }
 
-.login_form,
-.register_form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 40vw;
-  margin: 2em auto;
+@media (max-width: 768px) {
+  .jumbotron h1 {
+    font-size: 2rem;
+  }
 }
 
-.submit-button {
-  display: flex;
-  justify-content: space-between;
+@media (max-width: 420px) {
+  .jumbotron h1 {
+    font-size: 1.8rem;
+  }
 }
 
-.submit-button button {
-  width: 10vw;
+.search-area {
+background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 35%, rgba(255,255,255,0.8) 100%);
+  position: sticky;
+  top: 0;
+  height: 10vh;
 }
 
-.btn-outline-dark a:hover {
-  color: #fff;
-  text-decoration: none;
+#search {
+  background: rgba(255, 255, 255, 1);
+  margin-top: 10px;
 }
 
 /* .footer {
