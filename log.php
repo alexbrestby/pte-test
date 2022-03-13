@@ -3,6 +3,8 @@ require_once 'config/db.php';
 // ini_set('display_startup_errors', 1);
 // ini_set('display_errors', 1);
 // error_reporting(-1);
+$token = "1995157538:AAGFeHeDBkuPC-ABz0qek7xqkcnua8mbwGM";
+$chatid = "317794726";
 
 function getIp()
 {
@@ -32,11 +34,6 @@ function sendMessageToTelegram($chatID, $messaggio, $token)
     return $result;
 }
 
-$ip = getIp();
-$info = file_get_contents('http://ip-api.com/json/' . $ip . '?lang=ru');
-$message = json_decode($info, true);
-$ip_addr = $message["query"];
-
 $file = 'log.txt';
 $counterVisit = $_COOKIE["visited"] > 0 ? $_COOKIE["visited"] . " посещение" : "первый раз";
 $data = "IP - " . $message["query"] .
@@ -46,6 +43,11 @@ $data = "IP - " . $message["query"] .
 "\r\n" . $counterVisit .
 "\r\nвход выполнен: " . date("Y-m-d H:i:s") .
     "\r\n\r\n";
+
+$ip = getIp();
+$info = file_get_contents('http://ip-api.com/json/' . $ip . '?lang=ru');
+$message = json_decode($info, true);
+$ip_addr = $message["query"];
 
 if (!isset($_COOKIE["id"])) {
     $lifetime = 60 * 60 * 24 * 30;
@@ -75,25 +77,8 @@ if (isset($_POST["email"]) and $_POST["email"] !== "") {
 }
 
 if (session_status() === PHP_SESSION_NONE) {
-    $lifetime = 60 * 60 * 24 * 30;
-    // setcookie(session_name(), session_id(), time() + $lifetime);
     session_start(["cookie_lifetime" => '0']);
 }
-
-//var_dump($_COOKIE["visited"]); //default NULL
-
-// debug(session_id()); //default NULL
-
-// var_dump(session_status());
-
-// var_dump(session_id());
-
-// debug($_SESSION);
-
-// debug(session_get_cookie_params());
-
-$token = "1995157538:AAGFeHeDBkuPC-ABz0qek7xqkcnua8mbwGM";
-$chatid = "317794726";
 
 // file_put_contents($file, $data, FILE_APPEND);
 

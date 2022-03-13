@@ -1,5 +1,4 @@
 const cookies = document.cookie.split(";");
-console.log(cookies);
 let userId = "";
 cookies.forEach((elem) => {
   if (elem.trim().split("=")[0] === "id") {
@@ -49,15 +48,16 @@ if (
 
 $(document).on("input", function (ev) {
   if (!Swal.isVisible()) {
-    $.ajax({
-      type: "POST",
-      url: "search.php",
-      data: {
-        question: $("#search").val(),
-      },
-      success: function (data) {
-        $("#output").html(data);
-      },
-    });
+    // if ($("#search").val().slice($("#search").val().length - 1) ===  " ") {
+    if ($("#search").val().length >= 4) {
+      $.ajax({
+        type: "POST",
+        url: "search.php",
+        data: { question: $("#search").val() },
+        success: function (data) {
+          $("#output").html(data);
+        },
+      });
+    }
   }
 });

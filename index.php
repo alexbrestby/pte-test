@@ -9,7 +9,7 @@ include 'layout/header.php';
       <div class="search-area">
         <input type="text" class="form-control" id="search" placeholder="Начните вводить текст вопроса...">
       </div>
-      <div class=" answer d-flex flex-column justify-content-center"
+      <div class="box answer d-flex flex-column justify-content-center"
       id="output">
       </div>
     </div>

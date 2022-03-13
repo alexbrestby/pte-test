@@ -153,6 +153,12 @@ img {
   width: 100%;
 }
 
-mark {
+mark, p {
   display: inline;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.highlight {
+  background-color: #EEF43B;
 }
