@@ -100,11 +100,16 @@
   }
 }
 
+.box {
+  margin: 0 10px;
+}
+
 .search-area {
 background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 35%, rgba(255,255,255,0.8) 100%);
   position: sticky;
   top: 0;
   height: 10vh;
+  margin: 0 10px;
 }
 
 #search {
