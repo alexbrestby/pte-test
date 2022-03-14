@@ -19,7 +19,7 @@ if (mysqli_num_rows($result) > 0 && (mysqli_num_rows($result) != (int) $row_leng
         echo '<u><em><b>Вопрос</b></em></u>';
         $quest = preg_replace('/^ +| +$|( ) +/m', '$1', $row["q_text"]);
 
-        echo "<span>" . $quest . "</span><br>";
+        echo "<span class='quest'>" . $quest . "</span><br>";
         if ($row["q_img"]) {
             echo '<img src=assets/img/images/' . $row["q_img"] . ' alt="фото из вопроса">';
         }
