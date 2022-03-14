@@ -14,5 +14,7 @@ search.addEventListener("input", (event) => {
       );
     });
   }
-  setTimeout(mark, 500);
+  if (searchText.length >= 5) {
+    setTimeout(mark, 300);
+  }
 });
