@@ -105,7 +105,12 @@
 }
 
 .search-area {
-background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 35%, rgba(255,255,255,0.8) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.9) 35%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
   position: sticky;
   top: 0;
   height: 10vh;
@@ -158,12 +163,13 @@ img {
   width: 100%;
 }
 
-mark, p {
+mark,
+p {
   display: inline;
   padding: 0 !important;
   margin: 0 !important;
 }
 
 .highlight {
-  background-color: #EEF43B;
+  background-color: #eef43b;
 }
