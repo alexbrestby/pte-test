@@ -1,10 +1,14 @@
 <?php
-require_once 'config/db.php';
+require __DIR__ . '/vendor/autoload.php';
 // ini_set('display_startup_errors', 1);
 // ini_set('display_errors', 1);
 // error_reporting(-1);
-$token = "1995157538:AAGFeHeDBkuPC-ABz0qek7xqkcnua8mbwGM";
-$chatid = "317794726";
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$telegram_token = $_ENV["TELEGRAM_TOKEN"];
+$chat_id = $_ENV["TELEGRAM_CHAT_ID"];
 
 function getIp()
 {
@@ -53,6 +57,8 @@ if (!isset($_COOKIE["id"])) {
     $lifetime = 60 * 60 * 24 * 30;
     $newUserUniqueId = uniqid($prefix = "pte-");
     setcookie("id", $newUserUniqueId, time() + $lifetime);
+    sendMessageToTelegram($chat_id, "На сайт выполнен вход!\r\n" . $data, $telegram_token);
+
 }
 
 if (isset($_POST["email"]) and $_POST["email"] !== "") {
@@ -81,8 +87,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // file_put_contents($file, $data, FILE_APPEND);
-
-// sendMessageToTelegram($chatid, "На сайт выполнен вход!\r\n" . $data, $token);
 
 function debug($param)
 {
