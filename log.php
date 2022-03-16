@@ -28,17 +28,10 @@ function getIp()
     }
 }
 
-function sendMessageToTelegram($chatID, $messaggio, $token)
-{
-
-    $url = "https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $chatID;
-    $url = $url . "&text=" . urlencode($messaggio);
-
-    $result = file_get_contents($url);
-    return $result;
-}
-
-$file = 'log.txt';
+$ip = getIp();
+$info = file_get_contents('http://ip-api.com/json/' . $ip . '?lang=ru');
+$message = json_decode($info, true);
+$ip_addr = $message["query"];
 $counterVisit = $_COOKIE["visited"] > 0 ? $_COOKIE["visited"] . " посещение" : "первый раз";
 $data = "IP - " . $message["query"] .
 "\r\nстрана - " . $message["country"] .
@@ -48,10 +41,16 @@ $data = "IP - " . $message["query"] .
 "\r\nвход выполнен: " . date("Y-m-d H:i:s") .
     "\r\n\r\n";
 
-$ip = getIp();
-$info = file_get_contents('http://ip-api.com/json/' . $ip . '?lang=ru');
-$message = json_decode($info, true);
-$ip_addr = $message["query"];
+debug($data);
+
+function sendMessageToTelegram($chatID, $messaggio, $token)
+{
+    $url = "https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $chatID;
+    $url = $url . "&text=" . urlencode($messaggio);
+
+    $result = file_get_contents($url);
+    return $result;
+}
 
 if (!isset($_COOKIE["id"])) {
     $lifetime = 60 * 60 * 24 * 30;
