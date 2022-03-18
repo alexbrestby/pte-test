@@ -3,6 +3,7 @@ let userId = "";
 cookies.forEach((elem) => {
   if (elem.trim().split("=")[0] === "id") {
     userId = elem.trim().split("=")[1];
+    localStorage.setItem("id", userId);
   }
 });
 
@@ -23,13 +24,17 @@ const swalert = async () => {
     if (result.value) {
       var form = document.createElement("form");
       form.style.cssText = "display: none";
-      form.action = "./index.php";
+      form.action = "index.php";
       form.method = "POST";
 
       let input = document.createElement("input");
+      let input1 = document.createElement("input");
       input.name = "email";
       input.value = result.value;
+      input1.name = "text";
+      input1.value = "hello";
       form.append(input);
+      form.append(input1);
       document.body.append(form);
     }
     if (result.isConfirmed) {
@@ -40,9 +45,9 @@ const swalert = async () => {
 
 if (
   localStorage.getItem("id") === null ||
+  localStorage.getItem("id") === "" ||
   localStorage.getItem("id") !== userId
 ) {
-  localStorage.setItem("id", userId);
   swalert();
 }
 
