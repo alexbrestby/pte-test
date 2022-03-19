@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 // error_reporting(-1);
 
 session_start();
-$session_id_update_interval = 60 * 1;
+$session_id_update_interval = 60 * 60 * 24;
 
 if (!isset($_SESSION['EXPIRES']) || $_SESSION['EXPIRES'] < time()) {
     session_regenerate_id();
