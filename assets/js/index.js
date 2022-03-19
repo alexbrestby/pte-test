@@ -28,7 +28,6 @@ const swalert = async () => {
       form.method = "POST";
 
       let input = document.createElement("input");
-      let input1 = document.createElement("input");
       input.name = "email";
       input.value = result.value;
       form.append(input);

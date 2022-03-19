@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 // error_reporting(-1);
 
 session_start();
-$session_id_update_interval = 60 * 60 * 24;
+$session_id_update_interval = 60 * 1;
 
 if (!isset($_SESSION['EXPIRES']) || $_SESSION['EXPIRES'] < time()) {
     session_regenerate_id();
@@ -38,8 +38,11 @@ function getIp()
 
 function get_mail()
 {
+    global $conn;
+
     if (isset($_POST["email"])) {
         $mail = $_POST["email"];
+        // unset($_POST["email"]);
 
     } else {
         $sql = "SELECT * FROM users";
@@ -51,21 +54,26 @@ function get_mail()
                     $mail = $row["mail"];
                 }
             }
-
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
-        mysqli_close($conn);
+        // else {
+        //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        // }
+        // mysqli_close($conn);
     }
     return $mail;
 }
 
 $current_ip = getIp();
+$current_mail = get_mail();
+
+// debug($current_mail);
+// debug($_POST);
+
 $info = file_get_contents('http://ip-api.com/json/' . $current_ip . '?lang=ru');
 $message = json_decode($info, true);
 $ip_addr = $message["query"];
 
-$data_first = "email - " . get_mail() .
+$data_first = "email - " . $current_mail .
 "\r\nIP - " . $message["query"] .
 "\r\nстрана - " . $message["country"] .
 "\r\nгород - " . $message["city"] .
@@ -73,7 +81,7 @@ $data_first = "email - " . get_mail() .
 "\r\nпервый визит: " . date("Y-m-d H:i:s") .
     "\r\n\r\n";
 
-$data_no_first = "email - " . get_mail() .
+$data_no_first = "email - " . $current_mail .
 "\r\nIP - " . $message["query"] .
 "\r\nстрана - " . $message["country"] .
 "\r\nгород - " . $message["city"] .
@@ -97,7 +105,7 @@ $newUserUniqueId = uniqid($prefix = "pte-");
 
 if (!isset($_COOKIE["id"]) or ($_COOKIE["id"] === null)) {
 
-    if ($_POST and isset($_POST["email"]) and $_POST["email"] !== "") {
+    if ($_POST["email"] and !empty($current_mail)) {
 
         setcookie("id", $newUserUniqueId, time() + $lifetime);
         $userId = $_COOKIE["id"];
@@ -109,13 +117,9 @@ if (!isset($_COOKIE["id"]) or ($_COOKIE["id"] === null)) {
         }
 
         $sql = "INSERT INTO users (unique_id, mail, ip_addr, last_visit_at)
-            VALUES ('$newUserUniqueId', 'get_mail()', '$ip_addr', CURRENT_TIMESTAMP)";
+            VALUES ('$newUserUniqueId', '$current_mail', '$ip_addr', CURRENT_TIMESTAMP)";
 
-        if (mysqli_query($conn, $sql)) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
+        mysqli_query($conn, $sql);
 
         mysqli_close($conn);
         // header("Location: " . $_SERVER['PHP_SELF']);
@@ -134,23 +138,24 @@ if (!isset($_COOKIE["id"]) or ($_COOKIE["id"] === null)) {
 
     if (mysqli_query($conn, $sql)) {
         $result = mysqli_query($conn, $sql);
+
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row["unique_id"] === $_COOKIE["id"] and $_SESSION["current"] !== session_id()) {
                 sendMessageToTelegram($chat_id, "На сайт выполнен вход!\r\n" . $data, $telegram_token);
                 $_SESSION["current"] = session_id();
             }
         }
-
-        // debug($_SESSION);
-        // debug(time());
-
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
+    // else {
+    //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    // }
 
     mysqli_close($conn);
 }
-
+unset($_POST["email"]);
+unset($current_mail);
+// debug($current_mail);
+// debug($_POST);
 // file_put_contents($file, $data, FILE_APPEND);
 
 function debug($param)
