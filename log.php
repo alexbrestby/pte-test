@@ -4,6 +4,15 @@ require __DIR__ . '/vendor/autoload.php';
 // ini_set('display_errors', 1);
 // error_reporting(-1);
 
+session_start();
+$session_id_update_interval = 60 * 3;
+
+if (!isset($_SESSION['EXPIRES']) || $_SESSION['EXPIRES'] < time()) {
+    echo "PHP SID IS UPDATED<br>";
+    session_regenerate_id();
+    $_SESSION['EXPIRES'] = time() + $session_id_update_interval;
+}
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -29,18 +38,27 @@ function getIp()
 }
 
 $mail = $_POST["email"];
+
 $ip = getIp();
 $info = file_get_contents('http://ip-api.com/json/' . $ip . '?lang=ru');
 $message = json_decode($info, true);
 $ip_addr = $message["query"];
-$counterVisit = $_COOKIE["visited"] > 0 ? $_COOKIE["visited"] . " посещение" : "первый раз";
-$data = "IP - " . $message["query"] .
+
+$data_first = "IP - " . $message["query"] .
 "\r\nстрана - " . $message["country"] .
 "\r\nгород - " . $message["city"] .
 "\r\nпровайдер - " . $message["isp"] .
-"\r\n" . $counterVisit .
-"\r\nвход выполнен: " . date("Y-m-d H:i:s") .
+"\r\nпервый визит: " . date("Y-m-d H:i:s") .
     "\r\n\r\n";
+
+$data_no_first = "IP - " . $message["query"] .
+"\r\nстрана - " . $message["country"] .
+"\r\nгород - " . $message["city"] .
+"\r\nпровайдер - " . $message["isp"] .
+"\r\nповторный вход: " . date("Y-m-d H:i:s") .
+    "\r\n\r\n";
+
+$data = strlen($_COOKIE["id"]) > 0 ? $data_no_first : $data_first;
 
 function sendMessageToTelegram($chatID, $messaggio, $token)
 {
@@ -56,15 +74,12 @@ $newUserUniqueId = uniqid($prefix = "pte-");
 
 if (!isset($_COOKIE["id"]) or ($_COOKIE["id"] === null)) {
 
-    debug($_COOKIE["id"]);
-    debug($_POST["email"]);
-
     if ($_POST and isset($_POST["email"]) and $_POST["email"] !== "") {
 
         setcookie("id", $newUserUniqueId, time() + $lifetime);
         $userId = $_COOKIE["id"];
 
-        // sendMessageToTelegram($chat_id, "На сайт выполнен вход!\r\n" . $data, $telegram_token);
+        sendMessageToTelegram($chat_id, "На сайт выполнен вход!\r\n" . $data, $telegram_token);
 
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
@@ -80,15 +95,38 @@ if (!isset($_COOKIE["id"]) or ($_COOKIE["id"] === null)) {
         }
 
         mysqli_close($conn);
-        header("Location: " . $_SERVER['PHP_SELF']);
+        // header("Location: " . $_SERVER['PHP_SELF']);
 
     } else {
         setcookie("id", "", time() - 3600);
     }
-}
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(["cookie_lifetime" => '0']);
+} else {
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $sql = "SELECT * FROM users";
+
+    if (mysqli_query($conn, $sql)) {
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row["unique_id"] === $_COOKIE["id"] and $_SESSION["current"] !== session_id()) {
+                echo "прошло " . date('m', (time() - $_SESSION["current"]) % 60) . " минут";
+                sendMessageToTelegram($chat_id, "На сайт выполнен вход!\r\n" . $data, $telegram_token);
+                $_SESSION["current"] = session_id();
+            }
+        }
+
+        // debug($_SESSION);
+        // debug(time());
+
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+    mysqli_close($conn);
 }
 
 // file_put_contents($file, $data, FILE_APPEND);

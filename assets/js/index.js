@@ -31,10 +31,7 @@ const swalert = async () => {
       let input1 = document.createElement("input");
       input.name = "email";
       input.value = result.value;
-      input1.name = "text";
-      input1.value = "hello";
       form.append(input);
-      form.append(input1);
       document.body.append(form);
     }
     if (result.isConfirmed) {
